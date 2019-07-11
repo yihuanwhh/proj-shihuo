@@ -40,7 +40,7 @@ Vue.mixin({
     async searchScroll({vm,container,data}) {
       let page = 1
       Indicator.open()
-
+      
       vm.list = (await http.get(data.params)).data
 
       Indicator.close()
@@ -59,8 +59,8 @@ Vue.mixin({
         //获取翻页获取到的新数据
         let result = (await http.get(data.params)).data
         //将第一次的获取到的list与本次拖拽获取的结果合并,并将合并完成的集合返回给list返回给组件
-        let jjj = _.merge(vm.list,result)
-        console.log(jjj)
+        vm.list.list = [...vm.list.list,...result.list]
+        
         
         //下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
         vm.$nextTick(()=> {
