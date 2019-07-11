@@ -37,7 +37,7 @@ export default {
     handleClick() {
       this.$router.push('city')
     },
-    async search(keywords) {
+    search(keywords) {
       this.data = {
         url:'/search',
         params:{
@@ -45,12 +45,9 @@ export default {
           keywords:this.keywords
         }
       }
-      await this.$store.dispatch('search',this.data)
       this.$router.push({
         name:'pagesearch',
-        query:{
-          keywords
-        }
+        query:this.data
       })
     }
   }

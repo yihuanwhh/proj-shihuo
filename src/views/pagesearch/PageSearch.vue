@@ -1,5 +1,15 @@
 <template>
   <div class="mainBox">
+    <div class="search_bar">
+      <form action id="searchBox" method="get">
+        <div class="search_box">
+          <div class="search">
+            <!-- <div class="getdata" @click="search(keywords)"></div> -->
+            <input type="text" class="input focus" name="keywords" v-model= "keywords" :keywords="keywords" placeholder="搜索商品，品牌"   id="searchVal" />
+          </div>
+        </div>
+      </form>
+    </div>
     <div class="pageSearch-wraper">
       <div class="pageSearch">
         <div class="search-select" style="visibility: visible; transform: none;">
@@ -25,7 +35,7 @@
                 <span> {{this.$route.query.keywords}} </span> 相关优惠券
               </p>
               <ul>
-                <li v-for="value in this.data.data.baicai_list" :key="value.index" >
+                <li v-for="value in this.list.baicai_list" :key="value.index" >
                   <a :href="value.href">
                     <div class="imgs">
                       <span class="get_imgs">
@@ -49,8 +59,28 @@
             </div>
             <div class="list_news">
               <p class="tit">
-                <span>篮球</span> 优惠信息
+                <span>{{this.$route.query.keywords}}</span> 优惠信息
               </p>
+              <ul>
+                <li v-for="prod in this.list.list" :key="prod.id">
+                  <a :href="prod.href">
+                    <div class="imgs">
+                      <span class="get_imgs">
+                        <img :src="prod.img_url" alt="">
+                      </span>
+                    </div>
+                    <div class="details_box">
+                      <h2>{{prod.title[0]}}</h2>
+                      <p class="desc">{{prod.subtitle}}</p>
+                      <div class="btm">
+                        <div class="bus">
+                          商城：{{prod.business}}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -61,26 +91,97 @@
 
 <script>
 import {mapState} from 'vuex'
+import http from '../../utils/http'
 export default {
-  mounted(){
+  data() {
+    return {
+      querylist:'',
+      list:{},
+      keywords:''
+    }
   },
+  //其他页面来的搜索参数，页面第一次渲染
+  async mounted() {
+    //获取搜索框传来的搜索参数
+    this.querylist = {
+      params:this.$route.query
+    }
+    //拖拽滚动加载数据
+    this.searchScroll({
+      vm:this,
+      container:'.pageSearch-wraper',
+      data:this.querylist
+    })
+    //
+  },
+  methods:{
+    //本页面点击搜索触发搜索事件
+    async search(keywords) {
+      
+      let result = await http.get({
+        url:'/search',
+        params:{
+          type:'news',
+          keywords:this.keywords
+        }
+      })
+      console.log(result)
+    }
+  }
 
-  computed: {
-    ...mapState(['data'])
-  },
+  // computed: {
+  //   ...mapState(['data'])
+  // },
 }
 </script>
 
 <style lang="stylus" scoped>
 .mainBox
   height 100%
+  display flex
   overflow hidden
+  .search_bar
+    width 100%
+    height 46px
+    background -webkit-linear-gradient(top,rgba(0,0,0,.4),transparent)
+    // position absolute
+    // top 0
+    // z-index 10
+    form
+      width 100%
+      height 100%
+      .search_box
+        width 100%
+        height 100%
+        overflow hidden
+        .search
+          width 90%
+          height 100%
+          float left
+          padding-left .26667rem
+          position relative
+          .getdata
+            position absolute
+            top 10px
+            z-index 100
+            width .6rem
+            height .6rem
+            background #fff url(//sh1.hoopchina.com.cn/fis_static/shihuomobile/static/homefis/widget/header/search_0b8e800.png) .13333rem center no-repeat
+            background-size .34667rem
+          .input
+            width 100%
+            height .82667rem
+            border-radius .10667rem
+            border 0
+            font-size .32rem
+            padding-left .6rem
+            margin .2rem 0
   .pageSearch-wraper
-    height 100%
+    height 93.10%
     .pageSearch
       position relative
       background #f0f3f5
-      height 100%
+      overflow hidden
       .search-select
         position absolute
         width 100%
@@ -123,16 +224,15 @@ export default {
                 height 1px
                 background-color #ff4338
       .page-content
-        position relative
         height 100%
+        overflow hidden
         .searchList
           padding 1.2rem 0
           background #f0f3f5
-          position absolute
+          //position absolute
           top 0
           left 0
           width 100%
-          height 100%  
           .baicai_list
             background #ffffff
             margin-bottom  .26667rem
@@ -220,12 +320,12 @@ export default {
                     float left
                     position relative
                     .get_imgs
-                    height 0
-                    width 100%
-                    padding-bottom 100%
-                    display block
+                      height 0
+                      width 100%
+                      padding-bottom 100%
+                      display block
                       img
-                        width 100%
+                        width 100px
                   .details_box
                     width 60%
                     position relative
