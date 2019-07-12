@@ -4,8 +4,8 @@
       <form action id="searchBox" method="get">
         <div class="search_box">
           <div class="search">
-            <span class="getdata" @click="search(keywords)"></span>
-            <input type="text" class="input focus" name="keywords" v-model= "keywords" :keywords="keywords" placeholder="搜索商品，品牌"   id="searchVal" />
+            <span class="getdata" @click="search"></span>
+            <input type="text" class="input focus" name="keywords" v-model="keywords" placeholder="搜索商品，品牌"   id="searchVal" />
           </div>
           <div class="city-entry" @click="handleClick">
             <span class="city-name">{{city}}</span>
@@ -37,17 +37,10 @@ export default {
     handleClick() {
       this.$router.push('city')
     },
-    search(keywords) {
-      this.data = {
-        url:'/search',
-        params:{
-          type:'news',
-          keywords:this.keywords
-        }
-      }
+    search() {
       this.$router.push({
         name:'pagesearch',
-        query:this.data
+        query:this.keywords
       })
     }
   }

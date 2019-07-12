@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     city:'shangahi',
-    data:{}
+    data:{},
+    result:{}
   },
 
   mutations: {
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
     },
     setSearch(state,result) {
       state.data = result
+    },
+    setResult(state,result) {
+      state.result = result
     }
   },
 

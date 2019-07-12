@@ -41,7 +41,7 @@ Vue.mixin({
       let page = 1
       Indicator.open()
       
-      vm.list = (await http.get(data.params)).data
+      vm.list = (await http.get(data)).data
 
       Indicator.close()
 
@@ -54,10 +54,10 @@ Vue.mixin({
       bScroll.on('pullingUp',async function(){
         page++
         
-        data.params.params.page = page
+        data.params.page = page
         Indicator.open()
         //获取翻页获取到的新数据
-        let result = (await http.get(data.params)).data
+        let result = (await http.get(data)).data
         //将第一次的获取到的list与本次拖拽获取的结果合并,并将合并完成的集合返回给list返回给组件
         vm.list.list = [...vm.list.list,...result.list]
         

@@ -6,6 +6,12 @@ import Index from '../views/Index'
 import Home from '../views/home/Home'
 import City from '../views/city/City'
 import PageSearch from '../views/pagesearch/PageSearch'
+import Login from '../views/login/Login'
+
+import All from '../views/pagesearch/All'
+import Goods from '../views/pagesearch/Goods'
+import Youhui from '../views/pagesearch/Youhui'
+import Share from '../views/pagesearch/Share'
 
 import Discount from '../views/discount/Discount'
 import Discovery from '../views/discovery/Discovery'
@@ -55,7 +61,35 @@ let routes = [
     {
         path:'/pagesearch',
         name:'pagesearch',
-        component:PageSearch
+        redirect: '/pagesearch/youhui',
+        component:PageSearch,
+        children:[
+            {
+                path:'all',
+                name:'all',
+                component:All
+            },
+            {
+                path:'goods',
+                name:'goods',
+                component:Goods
+            },
+            {
+                path:'youhui',
+                name:'youhui',
+                component:Youhui
+            },
+            {
+                path:'share',
+                name:'share',
+                component:Share
+            }
+        ]
+    },
+    {
+        path:'/login',
+        name:'login',
+        component:Login
     }
 ]
 
