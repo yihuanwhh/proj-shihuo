@@ -7,6 +7,7 @@ import Home from '../views/home/Home'
 import City from '../views/city/City'
 import PageSearch from '../views/pagesearch/PageSearch'
 import Login from '../views/login/Login'
+import Regis from '../views/login/Regis'
 
 import All from '../views/pagesearch/All'
 import Goods from '../views/pagesearch/Goods'
@@ -49,7 +50,20 @@ let routes = [
             {
                 path: '/more',
                 name: 'more',
-                component: More
+                redirect: '/more/login',
+                component: More,
+                children:[
+                    {
+                        path:'login',
+                        name:'login',
+                        component:Login
+                    },
+                    {
+                        path:'regis',
+                        name:'regis',
+                        component:Regis
+                    }
+                ]
             }
         ]
     },
@@ -85,12 +99,7 @@ let routes = [
                 component:Share
             }
         ]
-    },
-    {
-        path:'/login',
-        name:'login',
-        component:Login
-    }
+    }    
 ]
 
 export default new VueRouter({

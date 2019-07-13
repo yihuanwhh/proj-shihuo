@@ -29,17 +29,22 @@ export default {
     },
     pass() {
       return this.$store.state.pass
+    },
+    data() {
+      return this.$store.state.userdata
     }
   },
   methods: {
     submit() {
-      console.log(this.username)
-      // this.$store.commit('setUser',this.username)
-      // localStorage.setItem('username',this.user)
+      let arr = localStorage.getItem('userdata').split(',')
+      console.log(localStorage.getItem('userdata'))
 
-      // this.$store.commit('setPass',this.password)
-      // localStorage.setItem('password',this.pass)
-      // localStorage.setItem('password',this.password)
+      let jsondata = JSON.stringify({
+        "username":this.username,
+        "password":this.password
+      })
+      this.$store.commit('setUserData',jsondata)
+      localStorage.setItem('userdata',this.data)
     },
 
     cancel() {

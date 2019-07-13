@@ -8,6 +8,8 @@ import store from './store/store'
 import './assets/styles/reset.styl'
 import './assets/incofont/iconfont.css'
 import './assets/styles/movie-item.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/js/bootstrap.min.js'
 
 import './mixins/scroll'
 

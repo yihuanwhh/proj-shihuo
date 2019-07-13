@@ -9,7 +9,10 @@ const store = new Vuex.Store({
   state: {
     city:'shangahi',
     data:{},
-    result:{}
+    result:{},
+    user:['nihao','dajiahao'],
+    pass:['ui','op'],
+    userdata:[]
   },
 
   mutations: {
@@ -21,6 +24,15 @@ const store = new Vuex.Store({
     },
     setResult(state,result) {
       state.result = result
+    },
+    setUser(state,user) {
+      state.user.push(user)
+    },
+    setPass(state,pass) {
+      state.pass.push(pass)
+    },
+    setUserData(state,userdata) {
+      state.userdata.push(userdata)
     }
   },
 
