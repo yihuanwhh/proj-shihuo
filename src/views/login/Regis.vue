@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data() {
     return {
@@ -29,22 +30,20 @@ export default {
     },
     pass() {
       return this.$store.state.pass
-    },
-    data() {
-      return this.$store.state.userdata
     }
   },
   methods: {
     submit() {
-      let arr = localStorage.getItem('userdata').split(',')
-      console.log(localStorage.getItem('userdata'))
-
+      let arr = localStorage.getItem('userdata')
       let jsondata = JSON.stringify({
         "username":this.username,
         "password":this.password
       })
-      this.$store.commit('setUserData',jsondata)
-      localStorage.setItem('userdata',this.data)
+      arr = arr + jsondata
+      console.log(jsondata)
+      localStorage.setItem('userdata',arr)
+      alert('注册成功！')
+      
     },
 
     cancel() {
